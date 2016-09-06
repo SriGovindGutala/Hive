@@ -20,13 +20,13 @@ stored as orc
 tblproperties ('transactional'='true');
 
 -- Inserting data
-insert into table hive_transactions values (1, 'itversity');
-insert into table hive_transactions values (2, 'itversity');
+insert into table hive_transactions values (1, 'Sri');
+insert into table hive_transactions values (2, 'Govind');
 
---or insert into table hive_transactions (i, j) values (1, 'itversity');
+--or insert into table hive_transactions (i, j) values (1, 'Sri');
 
 -- Updating data
-update hive_transactions set j = 'IT Versity' where i = 2;
+update hive_transactions set j = 'Sri Govind' where i = 2;
 
 -- Deleting data
 delete hive_transactions where i = 1;
