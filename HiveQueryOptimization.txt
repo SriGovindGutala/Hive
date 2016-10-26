@@ -1,4 +1,8 @@
-
+							
+							
+							HIVE_OPTIMIZATIONS
+							
+							
 To get best out of Hadoop, you need to know How to use it efficiently. Initially Apache Hadoop's Hive was not best choice for interactive and ad-hoc queries, but now with new enhancements, It has gained popularity  for both ad-hoc query and regular ETL workload. While It is one of the mature and popular solutions in Hadoop ece-system, There are lots of scope for Data Scientist  and Engineers to learn to use it efficiently.
 
 Quiet some time I was involved in migrating ETL workload from Enterprise Data Warehouse like Teradata and Netezza etc. to Hive. 
@@ -181,32 +185,22 @@ Allow Hive to combine multipe mapreduce (MR) jobs into a single MRR job where po
 
          SET hive.enable.mrr=true;
  
-
- 
-	•	
 10. Tune configuration
 	•	Adjust Configuration for Uneven Distribution 
-               SET hive.groupby.skewindata=true;
+               	SET hive.groupby.skewindata=true;
 	•	Increase the replication factor on dimension tables.
 	•	Use the distributed cache to hold dimension tables.
-	•	Don’t forget the hive.exec.mode.local.auto configuration variable.          SET hive.exec.mode.local.auto=true;
-	•	  
+	•	Don’t forget the hive.exec.mode.local.auto configuration variable.         		 SET hive.exec.mode.local.auto=true;
 	•	 Compress map/reduce output
                      SET mapred.compress.map.output=true;
                      SET mapred.output.compress=true;
 	•	Increase Parallelism
-                By default, the parallelism is dictated by the size of the data set and the default block size of 64 MB.
-               To increase number of mapper , reduce split size :  
-
-                SET mapred.max.split.size=1000000; (1 MB)    
-        
-
-               And adjust following parameters :  
-
-                SET mapreduce.input.fileinputformat.split.maxsize    
-                SET mapreduce.input.fileinputformat.split.minsize 
+ By default, the parallelism is dictated by the size of the data set and the default block size of 64 MB.
+ To increase number of mapper , reduce split size :  
+	SET mapred.max.split.size=1000000; (1 MB)    
+And adjust following parameters :  
+           SET mapreduce.input.fileinputformat.split.maxsize    
+           SET mapreduce.input.fileinputformat.split.minsize 
  
-
-              If the min is too large, you will have too few mappers. If the max is too  small, you will have too many mappers.       
-                   
-                 SET mapreduce.tasks.io.sort.mb  
+ If the min is too large, you will have too few mappers. If the max is too  small, you will have too many mappers.       
+           SET mapreduce.tasks.io.sort.mb  
