@@ -190,14 +190,15 @@ Allow Hive to combine multipe mapreduce (MR) jobs into a single MRR job where po
                	SET hive.groupby.skewindata=true;
 	•	Increase the replication factor on dimension tables.
 	•	Use the distributed cache to hold dimension tables.
-	•	Don’t forget the hive.exec.mode.local.auto configuration variable.         		 SET hive.exec.mode.local.auto=true;
+	•	Don’t forget the hive.exec.mode.local.auto configuration variable.
+		     SET hive.exec.mode.local.auto=true;
 	•	 Compress map/reduce output
                      SET mapred.compress.map.output=true;
                      SET mapred.output.compress=true;
 	•	Increase Parallelism
  By default, the parallelism is dictated by the size of the data set and the default block size of 64 MB.
  To increase number of mapper , reduce split size :  
-	SET mapred.max.split.size=1000000; (1 MB)    
+	   SET mapred.max.split.size=1000000; (1 MB)    
 And adjust following parameters :  
            SET mapreduce.input.fileinputformat.split.maxsize    
            SET mapreduce.input.fileinputformat.split.minsize 
