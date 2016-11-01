@@ -2,11 +2,11 @@
 
                                        Differences between Hive, Tez, Impala and Spark Sql
 
-					              Hive		    	Tez		      Impala	      Spark SQL
-Initiated By			    	FB, Apache		Hortonworks	Cloudera	    Databricks
-Execution Framework		  YARN+MR2		  YARN		    Impala D	    Spark Executors
-Compilation				      MapReduce	  	Hybrid		  Hybrid		    In-Memory
-Suitable For				    LargeBatches	Interactive	Interactive	  Interactive and medium sized batches
+					Hive		    	Tez		      Impala	      Spark SQL
+Initiated By			    	FB, Apache		Hortonworks	      Cloudera	      Databricks
+Execution Framework		        YARN+MR2		YARN	     	      Impala D	      Spark Executors
+Compilation				MapReduce	  	Hybrid		      Hybrid	      In-Memory
+Suitable For				LargeBatches	        Interactive	      Interactiv      Interactive and medium sized batches
 
 
 - Every execution engine has same type of sql’s but what is the difference
