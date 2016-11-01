@@ -18,7 +18,7 @@ Hive
 - Supports almost all the type of SQL like select, from, where, join, join multiple tables, group by, order by, etc
 - When you run a hive query, it executes a MapReduce + YARN execution framework. ( It is configured like that)
 - Hive metastore is build using the databases like mysql 
-- The megastore has the table name, column name, rest of the metadata related to the table
+- The metastore has the table name, column name, rest of the metadata related to the table
 - What ever execution engine it might be, Hive, Tex, Impala, Spark SQL with HoveContext. It connects to the megastore to get the metadata of the tables
 - Actual Data is stored in HDFS
 - To see the meta data of the table -> DESCRIBE FORMATTED orders;
