@@ -25,7 +25,7 @@ Hive
 - When the Job is ran, It runs a Map Reduce job. When there are multiple MR jobs running for one query, the output of the first reducer job will be input to the Mapper for the next MR job.
 
 TEZ
-- Tez developers thought that that communication is not necessary. When a query is executed using multiple MR Jobs, The output of one MR job need not be ported into mapper of the 2nd MR Job. There can be some redundancy and if that can be eliminated the performance can be better. 
+- Tez developers thought that that communication is not necessary. When a query is executed using multiple MR Jobs, the output of one MR job need not be ported into mapper of the 2nd MR Job. There can be some redundancy and if that can be eliminated the performance can be better. 
 - This is where TEZ DAG’s come into picture 
 - set hive.execution.engine=tez;
 
