@@ -1,0 +1,70 @@
+
+
+                                       Differences between Hive, Tez, Impala and Spark Sql
+
+					              Hive		    	Tez		      Impala	      Spark SQL
+Initiated By			    	FB, Apache		Hortonworks	Cloudera	    Databricks
+Execution Framework		  YARN+MR2		  YARN		    Impala D	    Spark Executors
+Compilation				      MapReduce	  	Hybrid		  Hybrid		    In-Memory
+Suitable For				    LargeBatches	Interactive	Interactive	  Interactive and medium sized batches
+
+
+- Every execution engine has same type of sql’s but what is the difference
+- Mainly we need to know between hive and spark
+- Tez and impala is between HortonWorks and Cloudera
+
+Hive 
+- Supports ASCII standards 
+- Supports almost all the type of SQL like select, from, where, join, join multiple tables, group by, order by, etc
+- When you run a hive query, it executes a MapReduce + YARN execution framework. ( It is configured like that)
+- Hive metastore is build using the databases like mysql 
+- The megastore has the table name, column name, rest of the metadata related to the table
+- What ever execution engine it might be, Hive, Tex, Impala, Spark SQL with HoveContext. It connects to the megastore to get the metadata of the tables
+- Actual Data is stored in HDFS
+- To see the meta data of the table -> DESCRIBE FORMATTED orders;
+- When the Job is ran, It runs a Map Reduce job. When there are multiple MR jobs running for one query, the output of the first reducer job will be input to the Mapper for the next MR job.
+
+TEZ
+- Tez developers thought that that communication is not necessary. When a query is executed using multiple MR Jobs, The output of one MR job need not be ported into mapper of the 2nd MR Job. There can be some redundancy and if that can be eliminated the performance can be better. 
+- This is where TEZ DAG’s come into picture 
+- set hive.execution.engine=tez;
+
+IMPALA
+- Impala instead of YARN and MR, It uses a daemon process called Impalad for execution 
+- Impala has 4 Daemon processes and Master processes
+	-> Impala Catalog Server
+	-> Impala Daemon
+	-> Impala Llama ApplicationMaster
+	-> Impala StateStore
+- Like YARN has ResourseManager , Impala has Catalog Server and StateStore
+- The processes which actually perform the heavy lifting are Impala Daemon process. This will run on all the slaves where the data nodes are running. 
+- These Impala D processes by pass the Map Reduce processing 
+
+SPARK
+- Spark is basically executed by Spark executors. These executors can be native or can be controlled by YARN.
+- This also bypasses MR framework completely instead it uses spark execution framework to execute. 
+
+
+Compilation Steps are similar across all the distributions.
+- When you write a query, it will check for the for clause and see if all the tables exists or not. To do this is needs a metastore. This MetaStore is in RDBMS
+- So the first step is to check is the query is syntactically correct, Then is the tables are existing in the hive metastore 
+- Once it reaches the metastore and fetches the metadata of these tables, it understands the location of the files in HDFS
+- Then depending upon the framework, this query will be compiled into a executable application.  
+- If it is Hive or Tez, it uses MR Api’s itself to compile the query into a java program and that java program will be compiled into a executable JAR and that JAR will be submitted as an application in the cluster. 
+ - If it is Impala then it generates the code in impala compatible language and then compiled by impala and that will be submitted as a job in impala
+- If it is Spark, It converts into spark based application.
+
+Execution
+- Hive uses MapReduce which is heavy I/O intensive compared to other frameworks. 
+- Tez uses MapReduce for API’s and for execution it uses YARN directly 
+- Impala uses MapReduce for API’s and for execution it uses its Daemons.
+- Spark SQL uses Spark based MR and executes in-memory 
+
+Suitable For 
+- Hive is suitable for very large batches like for several minutes to hours or days too 
+- Not effective for large batches. But if you need to run some reports in interactive fashion by connecting to hadoop cluster then tez and impala are effective solutions compared to HIVE
+- Spark-SQL, the advantage of this is it runs In-Memory. Hence it is very fast for interactive reporting and also for medium size batches 
+
+
+
+
