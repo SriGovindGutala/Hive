@@ -6,7 +6,7 @@
 Initiated By			    	FB, Apache		Hortonworks	      Cloudera	      Databricks
 Execution Framework		        YARN+MR2		YARN	     	      Impala D	      Spark Executors
 Compilation				MapReduce	  	Hybrid		      Hybrid	      In-Memory
-Suitable For				LargeBatches	        Interactive	      Interactiv      Interactive and medium sized batches
+Suitable For				LargeBatches	        Interactive	      Interactive     Interactive and medium sized batches
 
 
 - Every execution engine has same type of sql’s but what is the difference
@@ -51,7 +51,7 @@ Compilation Steps are similar across all the distributions.
 - Once it reaches the metastore and fetches the metadata of these tables, it understands the location of the files in HDFS
 - Then depending upon the framework, this query will be compiled into a executable application.  
 - If it is Hive or Tez, it uses MR Api’s itself to compile the query into a java program and that java program will be compiled into a executable JAR and that JAR will be submitted as an application in the cluster. 
- - If it is Impala then it generates the code in impala compatible language and then compiled by impala and that will be submitted as a job in impala
+- If it is Impala then it generates the code in impala compatible language and then compiled by impala and that will be submitted as a job in impala
 - If it is Spark, It converts into spark based application.
 
 Execution
