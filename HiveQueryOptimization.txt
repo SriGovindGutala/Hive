@@ -205,3 +205,37 @@ And adjust following parameters :  
  
  If the min is too large, you will have too few mappers. If the max is too  small, you will have too many mappers.       
            SET mapreduce.tasks.io.sort.mb  
+
+Hive Query Tuning
+1:
+DISTRIBUTE BY and SORT BY vs ORDER BY
+In Hive, ORDER BY is not a very fast operation because it forces all the data to go into the same reducer node. By doing this, Hive ensures that the entire dataset is totally ordered.
+
+However, sometimes we do not require total ordering. For example, suppose you have a table called user_action_table where each row has user_id, action, and time. Your goal is to order them by time per user_id.
+
+Query
+SELECT time, user_id, action FROM user_action_table
+ORDER BY user_id, time
+instead we can use
+SELECT time, user_id, action FROM user_action_table
+DISTRIBUTE BY user_id SORT BY time
+
+This is because all the rows belonging to the same user_id go to the same reducer (“DISTRIBUTE BY user_id”) and in each reducer, rows are sorted by time (“SORT BY time”). This is faster than the other query because it uses multiple reducers as opposed to a single reducer.
+
+2:
+Avoid “SELECT count(DISTINCT field) FROM tbl”
+This query looks familier to SQL users, but this query is very slow because only one reducer is used to process the request.
+
+SELECT count(DISTINCT field) FROM tbl
+So please rewrite the query like below to leverage multiple reducers.
+SELECT
+  count(1)
+FROM (
+  SELECT DISTINCT field FROM tbl
+) t
+
+3:
+Considering the Cardinality within GROUP BY
+There’s a probability where GROUP BY becomes a little bit faster, by carefully ordering a list of fields within GROUP BY in an order of high cardinality.
+good: SELECT GROUP BY uid, gender
+bad:  SELECT GROUP BY gender, uid
